@@ -38,7 +38,10 @@ const {
     <!-- Background (Unicorn Studio Animation - Fixed) -->
     <div class="aura-background-component fixed top-0 left-0 w-full h-screen mix-blend-screen brightness-50 opacity-50 saturate-0 z-10 pointer-events-none" data-alpha-mask="80" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)">
         <div class="aura-background-component absolute top-0 left-0 w-full h-full -z-10">
-            <div data-us-project="bKN5upvoulAmWvInmHza" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+            <!-- New Animation (Mobile Only) -->
+            <div data-us-project="inzENTvhzS9plyop7Z6g" class="absolute w-full h-full left-0 top-0 -z-10 md:hidden"></div>
+            <!-- Original Animation (Desktop Only) -->
+            <div data-us-project="bKN5upvoulAmWvInmHza" class="absolute w-full h-full left-0 top-0 -z-20 hidden md:block"></div>
             <script type="text/javascript" is:inline>
                 !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
             </script>
