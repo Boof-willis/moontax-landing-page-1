@@ -20,18 +20,24 @@ const {
     <meta name="description" content={description}>
     <title>{title}</title>
     
+    <!-- Preconnect to font providers for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Load fonts with display=swap for better performance -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <!-- Defer non-critical scripts -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
 </head>
 
 <body class="bg-black text-white antialiased overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200">
-    <!-- Background (Unicorn Studio Animation) -->
-    <div class="aura-background-component fixed top-0 w-full h-screen mix-blend-screen brightness-50 opacity-50 saturate-0 z-10 pointer-events-none" data-alpha-mask="80" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)">
-        <div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+    <!-- Background (Unicorn Studio Animation - Fixed) -->
+    <div class="aura-background-component fixed top-0 left-0 w-full h-screen mix-blend-screen brightness-50 opacity-50 saturate-0 z-10 pointer-events-none" data-alpha-mask="80" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)">
+        <div class="aura-background-component absolute top-0 left-0 w-full h-full -z-10">
             <div data-us-project="bKN5upvoulAmWvInmHza" class="absolute w-full h-full left-0 top-0 -z-10"></div>
             <script type="text/javascript" is:inline>
                 !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
@@ -39,10 +45,10 @@ const {
         </div>
     </div>
 
-    <!-- Progressive Blur Top -->
-    <div class="gradient-blur">
+    <!-- Progressive Blur Top (Removed - was causing text blur) -->
+    <!-- <div class="gradient-blur">
         <div></div><div class=""></div><div></div><div class=""></div><div></div><div></div>
-    </div>
+    </div> -->
 
     <slot />
 

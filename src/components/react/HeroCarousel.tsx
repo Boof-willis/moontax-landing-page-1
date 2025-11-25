@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 const carouselTexts = [
-  'Crypto Taxes: Solved',
-  'Crypto Taxes: Made Simple',
-  'Crypto Taxes: Fully Defensible'
+  'Solved',
+  'Made Simple',
+  'Fully Defensible'
 ];
 
 export default function HeroCarousel() {
@@ -25,6 +25,7 @@ export default function HeroCarousel() {
 
   return (
     <span
+      className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-200 pb-2"
       style={{
         transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out',
         opacity: isVisible ? 1 : 0,

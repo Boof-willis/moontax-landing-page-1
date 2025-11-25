@@ -3,24 +3,41 @@ import HeroCarousel from '../react/HeroCarousel';
 ---
 
 <section class="min-h-screen flex flex-col md:pt-20 overflow-hidden w-full pt-32 relative items-center justify-center" style="mask-image: linear-gradient(180deg, transparent, black 0%, black 95%, transparent);">
-    <!-- Background Effects -->
-    <div class="absolute inset-0 -z-20">
+    <!-- Background Effects (Fixed) -->
+    <div class="fixed inset-0 -z-20">
         <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/10 via-zinc-900/20 to-black"></div>
         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
     </div>
 
-    <!-- Grid/Curtain Structure -->
-    <div class="absolute inset-0 w-full h-full grid grid-cols-1 md:grid-cols-7 gap-0 -z-10 pointer-events-none">
-        <div class="relative h-full hidden md:block border-r border-white/5 col-anim delay-1"><div class="absolute bottom-0 left-0 right-0 bg-black h-[75%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div></div>
-        <div class="relative h-full hidden md:block border-r border-white/5 col-anim delay-2"><div class="absolute bottom-0 left-0 right-0 bg-black h-[65%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div></div>
-        <div class="relative h-full hidden md:block border-r border-white/5 col-anim delay-3"><div class="absolute bottom-0 left-0 right-0 bg-black h-[55%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div></div>
+    <!-- Grid/Curtain Structure (Fixed) -->
+    <div class="fixed inset-0 w-full h-full grid grid-cols-3 md:grid-cols-7 gap-0 -z-10 pointer-events-none">
+        <!-- Left Columns -->
+        <div class="relative h-full border-r border-white/5 col-anim delay-1">
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[60%] md:h-[75%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+        </div>
+        <div class="relative h-full border-r border-white/5 col-anim delay-2 hidden md:block">
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[65%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+        </div>
+        <div class="relative h-full border-r border-white/5 col-anim delay-3 hidden md:block">
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[55%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+        </div>
+
+        <!-- Center Column -->
         <div class="relative h-full border-r border-white/5 md:border-none col-anim delay-4">
-            <div class="absolute bottom-0 left-0 right-0 bg-black h-[45%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[40%] md:h-[45%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
             <div class="absolute top-[20%] left-0 right-0 h-[30%] bg-gradient-to-b from-orange-500/5 to-transparent pointer-events-none"></div>
         </div>
-        <div class="relative h-full hidden md:block border-l border-white/5 col-anim delay-5"><div class="absolute bottom-0 left-0 right-0 bg-black h-[55%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div></div>
-        <div class="relative h-full hidden md:block border-l border-white/5 col-anim delay-6"><div class="absolute bottom-0 left-0 right-0 bg-black h-[65%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div></div>
-        <div class="relative h-full hidden md:block border-l border-white/5 col-anim delay-7"><div class="absolute bottom-0 left-0 right-0 bg-black h-[75%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div></div>
+
+        <!-- Right Columns -->
+        <div class="relative h-full border-l border-white/5 col-anim delay-5 hidden md:block">
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[55%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+        </div>
+        <div class="relative h-full border-l border-white/5 col-anim delay-6 hidden md:block">
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[65%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+        </div>
+        <div class="relative h-full border-l border-white/5 col-anim delay-7">
+            <div class="absolute bottom-0 left-0 right-0 bg-black h-[60%] md:h-[75%] border-t border-white/10 shadow-[0_-20px_60px_-10px_rgba(0,0,0,0.8)]"></div>
+        </div>
     </div>
 
     <!-- Content Container -->
@@ -33,8 +50,9 @@ import HeroCarousel from '../react/HeroCarousel';
         </div>
 
         <!-- Heading with Carousel -->
-        <h1 class="[animation:fadeSlideIn_1s_ease-out_1s_both] animate-on-scroll animate flex flex-col items-center justify-center leading-[1.1] md:text-7xl cursor-default text-5xl font-medium tracking-tighter font-manrope mb-8">
-            <span class="inline-flex bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50">
+        <h1 class="[animation:fadeSlideIn_1s_ease-out_1s_both] animate-on-scroll animate flex flex-col items-center justify-center leading-[1.05] text-5xl md:text-[96px] cursor-default font-medium tracking-tighter font-manrope mb-8">
+            <span class="inline-flex bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 pr-1">Crypto Taxes</span>
+            <span class="inline-flex text-white mt-2">
                 <HeroCarousel client:load />
             </span>
         </h1>
@@ -46,27 +64,59 @@ import HeroCarousel from '../react/HeroCarousel';
 
         <!-- CTAs -->
         <div class="[animation:fadeSlideIn_1s_ease-out_1.4s_both] animate-on-scroll flex flex-col items-center justify-center gap-6 mb-12 animate">
-            <button class="group flex overflow-hidden uppercase transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_-10px_rgba(234,88,12,0.5)] focus:outline-none text-sm font-medium text-white tracking-widest font-geist rounded-full pt-5 pr-12 pb-5 pl-12 relative items-center justify-center">
-                <!-- Full Border Beam (Single Beam) -->
-                <div class="absolute inset-0 -z-20 rounded-full overflow-hidden p-[1px]">
-                    <div class="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0_300deg,#ea580c_360deg)]" style="animation: beam-spin 3s linear infinite;"></div>
-                    <div class="absolute inset-[1px] rounded-full bg-black"></div>
-                </div>
+            <button class="comet-button group flex overflow-hidden uppercase transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_-10px_rgba(234,88,12,0.5)] focus:outline-none text-sm font-medium text-white tracking-widest font-geist rounded-full pt-5 pr-6 pb-5 pl-6 md:pr-12 md:pl-12 relative items-center justify-center cursor-pointer [background:linear-gradient(#3f3f46,#27272a)_padding-box,conic-gradient(from_var(--border-angle),rgb(24_24_27/.48)_80%,_#ea580c_86%,_#fb923c_90%,_#ea580c_94%,_rgb(24_24_27/.48))_border-box] border border-transparent animate-border-spin">
+                <style>
+                    @property --border-angle {
+                        syntax: "<angle>";
+                        inherits: false;
+                        initial-value: 0deg;
+                    }
+                    
+                    @property --glow-opacity {
+                        syntax: "<number>";
+                        inherits: false;
+                        initial-value: 0;
+                    }
+                    
+                    @keyframes border-spin-anim {
+                        to {
+                            --border-angle: 360deg;
+                        }
+                    }
+                    
+                    @keyframes dots-move { 
+                        0% { background-position: 0 0; } 
+                        100% { background-position: 24px 24px; } 
+                    }
+                    
+                    .animate-border-spin {
+                        animation: border-spin-anim 3s linear infinite;
+                    }
+                    
+                    .orange-glow {
+                        opacity: 0;
+                        transition: opacity 500ms ease-out;
+                        will-change: opacity;
+                        transform: translateZ(0);
+                    }
+                    
+                    .group:hover .orange-glow {
+                        opacity: 1;
+                        transition: opacity 300ms ease-in;
+                    }
+                </style>
 
                 <!-- Inner Background & Effects -->
-                <div class="-z-10 overflow-hidden bg-zinc-950 rounded-full absolute top-[2px] right-[2px] bottom-[2px] left-[2px]">
+                <div class="-z-10 overflow-hidden bg-zinc-800 rounded-full absolute top-[2px] right-[2px] bottom-[2px] left-[2px]">
                     <!-- Light Monotone Gradient Background -->
-                    <div class="absolute inset-0 bg-gradient-to-b from-zinc-800/60 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-zinc-700 to-zinc-800"></div>
                     
-                    <!-- Animated Dots Pattern -->
-                    <div class="opacity-30 mix-blend-overlay absolute top-0 right-0 bottom-0 left-0" style="background-image: radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px); background-size: 12px 12px; animation: dots-move 8s linear infinite"></div>
-                    
-                    <!-- Orange Glow on Hover -->
-                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-1/2 bg-orange-500/10 blur-2xl rounded-full pointer-events-none transition-colors duration-500 group-hover:bg-orange-500/30"></div>
+                    <!-- Orange Glow (Internal) -->
+                    <div class="orange-glow absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-1/2 bg-orange-500/50 blur-2xl rounded-full pointer-events-none"></div>
                 </div>
 
                 <!-- Content -->
-                <span class="relative z-10 text-white/90 transition-colors group-hover:text-white font-sans">Book a Free Tax Strategy Call</span>
+                <span class="relative z-10 text-white transition-colors group-hover:text-white font-sans">Book a Free Tax Strategy Call</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right relative z-10 ml-2 transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
             </button>
 
@@ -79,28 +129,109 @@ import HeroCarousel from '../react/HeroCarousel';
 
     </div>
 
-    <!-- Authority / Social Proof -->
-    <div class="[animation:fadeSlideIn_1s_ease-out_1.8s_both] animate-on-scroll relative z-20 w-full max-w-6xl mx-auto px-6 pb-12 md:pb-20 animate">
-        <div class="text-center mb-8">
-            <p class="text-sm text-gray-500 font-medium uppercase tracking-widest font-sans">You're in Expert Hands</p>
-        </div>
-        <div class="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] opacity-60 grayscale hover:grayscale-0 transition-all duration-700 group">
-            <div class="flex items-center justify-center md:justify-start [&_div]:mx-8 w-max animate-infinite-scroll">
-                <!-- Stats as "Logos" -->
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">$1B+ Reconciled</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">98% Satisfaction</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">Tax Attorney Backed</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">CPA Certified</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">Audit Defense</span></div>
+    <!-- Authority / Social Proof (Updated Ticker) -->
+    <section class="z-10 fade-in fade-in-delay-4 pt-8 pb-8 relative w-full max-w-7xl mx-auto" style="opacity: 1; transform: translateY(0px);">
+        <div class="sm:px-6 lg:px-8 mr-auto ml-auto pr-4 pl-4">
+            <div class="text-center mb-12">
+                <p class="uppercase text-xs font-medium text-zinc-500 tracking-wide">You're in Expert Hands</p>
+            </div>
+
+            <!-- Ticker Container -->
+            <div class="overflow-hidden relative" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
                 
-                <!-- Duplicate for scroll -->
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">$1B+ Reconciled</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">98% Satisfaction</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">Tax Attorney Backed</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">CPA Certified</span></div>
-                <div class="flex items-center gap-2"><span class="font-semibold text-xl text-white font-manrope">Audit Defense</span></div>
+                <!-- Animated Ticker -->
+                <div class="ticker-track flex gap-16 pt-2 pb-2 items-center">
+                    <!-- First set of stats -->
+                    <div class="flex gap-16 shrink-0 items-center">
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">$1B+ Reconciled</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">98% Satisfaction</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">Tax Attorney Backed</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">CPA Certified</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">Audit Defense</span>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate set for seamless loop -->
+                    <div class="flex items-center gap-16 shrink-0">
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">$1B+ Reconciled</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">98% Satisfaction</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">Tax Attorney Backed</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">CPA Certified</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">Audit Defense</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Third set for seamless loop on large screens -->
+                    <div class="flex items-center gap-16 shrink-0">
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">$1B+ Reconciled</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">98% Satisfaction</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">Tax Attorney Backed</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">CPA Certified</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors duration-300">
+                            <span class="text-lg font-semibold tracking-tighter font-manrope">Audit Defense</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <style>
+            @keyframes ticker {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-33.33%);
+                }
+            }
+
+            .ticker-track {
+                animation: ticker 40s linear infinite;
+                width: max-content;
+            }
+
+            .ticker-track:hover {
+                animation-play-state: paused;
+            }
+        </style>
+    </section>
 </section>
 
