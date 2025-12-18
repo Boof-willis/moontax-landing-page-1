@@ -247,18 +247,33 @@ export default function MultiStepForm() {
   };
 
   return (
-    <div className={`w-full mx-auto bg-zinc-950/75 backdrop-blur-md border border-white/10 rounded-[2.5rem] shadow-2xl relative z-30 transition-all duration-500 ${currentStep === 5 ? 'max-w-[1400px] overflow-visible' : 'max-w-2xl overflow-hidden'}`}>
-      {/* Progress Bar */}
+    <div className={`w-full flex flex-col items-center justify-center ${currentStep === 5 ? 'px-0' : 'px-6 md:px-0'}`}>
+      {/* Return Home Link */}
       {currentStep < 5 && (
-        <div className="h-1 w-full bg-white/5 relative">
-          <div 
-            className="absolute top-0 left-0 h-full bg-orange-500 transition-all duration-1000 ease-out"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="w-full max-w-2xl mb-8 flex justify-start">
+          <a href="/" className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:-translate-x-1"><path d="m15 18-6-6 6-6"/></svg>
+            <span className="text-xs uppercase tracking-widest font-medium">Return Home</span>
+          </a>
         </div>
       )}
 
-      <div className="p-8 md:p-12">
+      <div className={`w-full mx-auto bg-zinc-950/75 backdrop-blur-md border-white/10 shadow-2xl relative z-30 transition-all duration-500 ${
+        currentStep === 5 
+          ? 'max-w-[1400px] overflow-visible md:rounded-[2.5rem] rounded-none min-h-screen md:min-h-0 border-y md:border-x' 
+          : 'max-w-2xl overflow-hidden rounded-[2.5rem] border'
+      }`}>
+        {/* Progress Bar */}
+        {currentStep < 5 && (
+          <div className="h-1 w-full bg-white/5 relative">
+            <div 
+              className="absolute top-0 left-0 h-full bg-orange-500 transition-all duration-1000 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        )}
+
+        <div className={`transition-all duration-500 ${currentStep === 5 ? 'p-0 md:p-12' : 'p-8 md:p-12'}`}>
         {currentStep < 5 && (
           <div className="mb-8 flex justify-between items-center">
             <span className="text-xs font-mono text-orange-500 uppercase tracking-widest">
@@ -501,30 +516,32 @@ export default function MultiStepForm() {
         {/* Step 5: Calendar Booking */}
         {currentStep === 5 && priority && (
           <div className="animate-in fade-in zoom-in-95 duration-700">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
-                {priority === 'high' && "You qualify for a priority consultation."}
-                {priority === 'medium' && "Let's get you scheduled."}
-                {priority === 'low' && "Book a time to chat with our team."}
-              </h2>
-              <p className="text-zinc-400 font-sans">
-                Select a time below and we'll send you a confirmation.
+            <div className="md:rounded-2xl border-y md:border border-white/10 bg-white/5 relative md:h-[700px] md:overflow-auto overflow-visible">
+              <div className="text-center py-12 px-6 md:px-12">
+                <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
+                  {priority === 'high' && "You qualify for a priority consultation."}
+                  {priority === 'medium' && "Let's get you scheduled."}
+                  {priority === 'low' && "Book a time to chat with our team."}
+                </h2>
+                <p className="text-zinc-400 font-sans">
+                  Select a time below and we'll send you a confirmation.
+                </p>
+              </div>
+              
+              <div className="px-4 pb-20">
+                <iframe 
+                  src={buildCalendarUrl(priority, formData)} 
+                  className="w-full h-[600px] md:h-[650px] border-0"
+                  id={`calendar-${priority}`}
+                  title="Scheduling Calendar"
+                  scrolling="no"
+                />
+              </div>
+
+              <p className="text-center text-sm text-zinc-500 mt-8 font-sans px-6 md:px-0 pb-12">
+                Can't find a time that works? Email us at <a href="mailto:hello@moontax.com" className="text-orange-500 hover:text-orange-400 transition-colors">hello@moontax.com</a>
               </p>
             </div>
-            
-            <div className="rounded-2xl border border-white/10 bg-white/5 relative h-[800px] md:h-[700px] overflow-auto">
-              <iframe 
-                src={buildCalendarUrl(priority, formData)} 
-                className="w-full h-full border-0"
-                id={`calendar-${priority}`}
-                title="Scheduling Calendar"
-                scrolling="yes"
-              />
-            </div>
-
-            <p className="text-center text-sm text-zinc-500 mt-8 font-sans">
-              Can't find a time that works? Email us at <a href="mailto:hello@moontax.com" className="text-orange-500 hover:text-orange-400 transition-colors">hello@moontax.com</a>
-            </p>
           </div>
         )}
 
@@ -568,5 +585,6 @@ export default function MultiStepForm() {
         )}
       </div>
     </div>
+  </div>
   );
 }
