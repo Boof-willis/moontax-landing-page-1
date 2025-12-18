@@ -57,6 +57,16 @@ export default function MultiStepForm() {
     };
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const calculateLeadScore = (data: typeof formData) => {
     let score = 0;
     
@@ -96,17 +106,22 @@ export default function MultiStepForm() {
     const nameParts = data.name.trim().split(' ');
     const firstName = nameParts[0] || '';
     const lastName = nameParts.slice(1).join(' ') || '';
+    const rawPhone = data.phone.replace(/[^\d]/g, '');
+    const cleanPhone = rawPhone.length === 10 ? `1${rawPhone}` : rawPhone;
 
     const params = new URLSearchParams({
       first_name: firstName,
-      firstName: firstName, // Common variation
+      firstName: firstName,
       last_name: lastName,
-      lastName: lastName,   // Common variation
+      lastName: lastName,
       name: data.name,
-      full_name: data.name, // Common variation
+      full_name: data.name,
       email: data.email,
-      phone: data.phone,
-      phone_number: data.phone, // Common variation
+      phone: cleanPhone,
+      phone_number: cleanPhone,
+      'contact.phone': cleanPhone,
+      contact_phone: cleanPhone,
+      mobile_phone: cleanPhone,
       activity: data.activity.join(', '),
       challenge: data.challenge,
       timeline: data.timeline,
@@ -170,6 +185,8 @@ export default function MultiStepForm() {
         return;
       }
 
+      setIsProcessing(true); // Start loading state
+
       const score = calculateLeadScore(formData);
       const level = getPriorityLevel(score);
       setPriority(level);
@@ -177,8 +194,11 @@ export default function MultiStepForm() {
       
       // Submit lead data to webhook immediately
       try {
+        const rawPhone = formData.phone.replace(/[^\d]/g, '');
+        const cleanPhone = rawPhone.length === 10 ? `1${rawPhone}` : rawPhone;
         const payload = {
           ...formData,
+          phone: cleanPhone,
           lead_score: score,
           priority_level: level,
           full_name: formData.name,
@@ -194,7 +214,10 @@ export default function MultiStepForm() {
         urlParams.set('first_name', firstName);
         urlParams.set('last_name', lastName);
         urlParams.set('email', formData.email);
-        urlParams.set('phone', formData.phone);
+        urlParams.set('phone', cleanPhone);
+        urlParams.set('phone_number', cleanPhone);
+        urlParams.set('contact.phone', cleanPhone);
+        urlParams.set('contact_phone', cleanPhone);
         urlParams.set('priority', level);
         
         const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
@@ -210,8 +233,14 @@ export default function MultiStepForm() {
         console.log('Lead successfully submitted to CRM');
       } catch (error) {
         console.error('Error submitting lead to webhook:', error);
-        // We still proceed to calendar step even if webhook fails to not block user
       }
+
+      // Brief delay to show the loading animation
+      setTimeout(() => {
+        setIsProcessing(false);
+        setCurrentStep(5);
+      }, 2000);
+      return;
     }
     setCurrentStep((prev) => Math.min(prev + 1, steps.length));
   };
@@ -249,7 +278,7 @@ export default function MultiStepForm() {
   return (
     <div className={`w-full flex flex-col items-center justify-center ${currentStep === 5 ? 'px-0' : 'px-6 md:px-0'}`}>
       {/* Return Home Link */}
-      {currentStep < 5 && (
+      {currentStep < 5 && !isProcessing && (
         <div className="w-full max-w-2xl mb-8 flex justify-start">
           <a href="/" className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:-translate-x-1"><path d="m15 18-6-6 6-6"/></svg>
@@ -258,11 +287,18 @@ export default function MultiStepForm() {
         </div>
       )}
 
-      <div className={`w-full mx-auto bg-zinc-950/75 backdrop-blur-md border-white/10 shadow-2xl relative z-30 transition-all duration-500 ${
-        currentStep === 5 
-          ? 'max-w-[1400px] overflow-visible md:rounded-[2.5rem] rounded-none min-h-screen md:min-h-0 border-y md:border-x' 
-          : 'max-w-2xl overflow-hidden rounded-[2.5rem] border'
-      }`}>
+      {isProcessing ? (
+        <div className="flex flex-col items-center justify-center py-20 animate-in fade-in duration-500">
+          <div className="w-16 h-16 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mb-6"></div>
+          <h2 className="text-2xl font-manrope font-semibold text-white mb-2">Analyzing your tax situation...</h2>
+          <p className="text-zinc-400 font-sans">Matching you with the right specialist.</p>
+        </div>
+      ) : (
+        <div className={`w-full mx-auto relative z-[60] transition-all duration-500 ${
+          currentStep === 5 
+            ? 'max-w-[1400px] overflow-visible' 
+            : 'max-w-2xl overflow-hidden rounded-[2.5rem] bg-zinc-950/75 backdrop-blur-md border border-white/10 shadow-2xl'
+        }`}>
         {/* Progress Bar */}
         {currentStep < 5 && (
           <div className="h-1 w-full bg-white/5 relative">
@@ -516,7 +552,7 @@ export default function MultiStepForm() {
         {/* Step 5: Calendar Booking */}
         {currentStep === 5 && priority && (
           <div className="animate-in fade-in zoom-in-95 duration-700">
-            <div className="md:rounded-2xl border-y md:border border-white/10 bg-white/5 relative md:h-[700px] md:overflow-auto overflow-visible">
+            <div className="relative overflow-visible">
               <div className="text-center py-12 px-6 md:px-12">
                 <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
                   {priority === 'high' && "You qualify for a priority consultation."}
@@ -531,10 +567,10 @@ export default function MultiStepForm() {
               <div className="px-4 pb-20">
                 <iframe 
                   src={buildCalendarUrl(priority, formData)} 
-                  className="w-full h-[600px] md:h-[650px] border-0"
+                  className="w-full h-[800px] md:h-[700px] border-0"
                   id={`calendar-${priority}`}
                   title="Scheduling Calendar"
-                  scrolling="no"
+                  scrolling={isMobile ? "yes" : "no"}
                 />
               </div>
 
@@ -585,6 +621,7 @@ export default function MultiStepForm() {
         )}
       </div>
     </div>
+    )}
   </div>
   );
 }
