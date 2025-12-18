@@ -247,7 +247,7 @@ export default function MultiStepForm() {
   };
 
   return (
-    <div className={`w-full max-w-2xl mx-auto bg-zinc-950/75 backdrop-blur-md border border-white/10 rounded-[2.5rem] shadow-2xl relative z-30 ${currentStep === 5 ? 'overflow-visible' : 'overflow-hidden'}`}>
+    <div className={`w-full mx-auto bg-zinc-950/75 backdrop-blur-md border border-white/10 rounded-[2.5rem] shadow-2xl relative z-30 transition-all duration-500 ${currentStep === 5 ? 'max-w-[1400px] overflow-visible' : 'max-w-2xl overflow-hidden'}`}>
       {/* Progress Bar */}
       {currentStep < 5 && (
         <div className="h-1 w-full bg-white/5 relative">
