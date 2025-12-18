@@ -280,11 +280,19 @@ export default function MultiStepForm() {
               Select all that apply to your situation.
             </p>
             <div className="flex flex-wrap gap-3">
-              {['DeFi / DEX Power User', 'High-Volume Trading', 'NFTs & Minting', 'Staking & Rewards', 'Mining', 'Trading Bots', 'Basic HODLing'].map((type) => (
+              {[
+                'DeFi / DEX Power User', 
+                'Mining',
+                'High-Volume Trading', 
+                'NFTs & Minting', 
+                'Staking & Rewards', 
+                'Trading Bots', 
+                'Basic HODLing'
+              ].map((type) => (
                 <button
                   key={type}
                   onClick={() => toggleActivity(type)}
-                  className={`py-3 px-6 rounded-full border text-sm font-medium transition-all cursor-pointer ${
+                  className={`py-3 px-4 md:px-6 rounded-full border text-xs md:text-sm font-medium transition-all cursor-pointer text-center flex items-center justify-center whitespace-nowrap ${
                     formData.activity.includes(type)
                       ? 'bg-zinc-100 border-zinc-100 text-black shadow-[0_0_20px_rgba(255,255,255,0.1)]'
                       : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20'

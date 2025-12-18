@@ -32,8 +32,16 @@ body {
 
 /* Animation Keyframe: Column Clip Reveal */
 @keyframes columnReveal {
-    0% { clip-path: inset(0 0 100% 0); opacity: 0; }
-    100% { clip-path: inset(0 0 0% 0); opacity: 1; }
+    0% { 
+        clip-path: inset(0 0 100% 0); 
+        -webkit-clip-path: inset(0 0 100% 0);
+        opacity: 0; 
+    }
+    100% { 
+        clip-path: inset(0 0 0% 0); 
+        -webkit-clip-path: inset(0 0 0% 0);
+        opacity: 1; 
+    }
 }
 
 .col-anim {
