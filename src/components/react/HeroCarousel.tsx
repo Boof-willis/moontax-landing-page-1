@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
 const carouselTexts = [
-  'Solved',
-  'Made Simple',
-  'Fully Defensible'
+  'Gaps',
+  'Red Flags',
+  'Holes',
+  'Problems'
 ];
 
 export default function HeroCarousel() {

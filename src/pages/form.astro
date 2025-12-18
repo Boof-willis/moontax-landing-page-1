@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MultiStepForm from '../components/react/MultiStepForm';
+---
+
+<BaseLayout title="Get My Free Audit | MoonTax">
+    <main class="min-h-screen flex items-center justify-center px-6 py-12 relative z-20 overflow-y-auto">
+        {/* Simple back link or logo for orientation */}
+        <div class="absolute top-8 left-1/2 -translate-x-1/2 md:left-12 md:translate-x-0 z-50">
+            <a href="/" class="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:-translate-x-1"><path d="m15 18-6-6 6-6"/></svg>
+                <span class="text-xs uppercase tracking-widest font-medium">Return Home</span>
+            </a>
+        </div>
+
+        <MultiStepForm client:load />
+    </main>
+</BaseLayout>

@@ -7,8 +7,8 @@ interface Props {
 }
 
 const { 
-  title = 'MoonTax - Crypto Taxes Done Right',
-  description = 'We reconcile your wallets, exchanges, DeFi activity, NFTs, and bots — delivering clean, accurate, CPA-prepared, IRS-ready reports backed by audit defense and powered by our AI engine, CPAI.'
+  title = 'MoonTax - Expert Crypto Tax Reconciliation & Data Cleaning',
+  description = 'Stop worrying about messy crypto data. We decode complex blockchain transactions, reconcile years of trading chaos, and deliver IRS-compliant reports. Reconciled over $1B in transactions.'
 } = Astro.props;
 ---
 
@@ -36,12 +36,10 @@ const {
 
 <body class="bg-black text-white antialiased overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200">
     <!-- Background (Unicorn Studio Animation - Fixed) -->
-    <div class="aura-background-component fixed top-0 left-0 w-full h-screen mix-blend-screen brightness-50 opacity-50 saturate-0 z-10 pointer-events-none" data-alpha-mask="80" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)">
-        <div class="aura-background-component absolute top-0 left-0 w-full h-full -z-10">
-            <!-- New Animation (Mobile Only) -->
-            <div data-us-project="inzENTvhzS9plyop7Z6g" class="absolute w-full h-full left-0 top-0 -z-10 md:hidden"></div>
-            <!-- Original Animation (Desktop Only) -->
-            <div data-us-project="bKN5upvoulAmWvInmHza" class="absolute w-full h-full left-0 top-0 -z-20 hidden md:block"></div>
+    <div class="fixed top-0 left-0 w-screen h-screen mix-blend-screen brightness-50 opacity-50 saturate-0 z-10 pointer-events-none" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)">
+        <div class="absolute inset-0 -z-10">
+            <!-- Unified Animation (Mobile & Desktop) -->
+            <div data-us-project="bKN5upvoulAmWvInmHza" class="absolute inset-0 -z-20"></div>
             <script type="text/javascript" is:inline>
                 !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
             </script>
@@ -54,6 +52,41 @@ const {
     </div> -->
 
     <slot />
+
+    <!-- Tracking Script -->
+    <script is:inline>
+        (function() {
+            // Capture and persist tracking parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const trackingParams = [
+                'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+                'gclid', 'fbclid', 'msclkid', 'ttclid', 'li_fat_id'
+            ];
+            
+            const data = JSON.parse(sessionStorage.getItem('moontax_tracking') || '{}');
+            
+            // Capture UTMs and Click IDs
+            trackingParams.forEach(param => {
+                if (urlParams.has(param)) {
+                    data[param] = urlParams.get(param);
+                }
+            });
+            
+            // Capture Referrer (only if not from our own site)
+            if (document.referrer && !document.referrer.includes(window.location.hostname)) {
+                if (!data.referring_url) {
+                    data.referring_url = document.referrer;
+                }
+            }
+            
+            // Always capture entry URL if not set
+            if (!data.entry_url) {
+                data.entry_url = window.location.href;
+            }
+            
+            sessionStorage.setItem('moontax_tracking', JSON.stringify(data));
+        })();
+    </script>
 
     <script is:inline>
         if (typeof lucide !== 'undefined') {

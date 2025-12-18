@@ -2,7 +2,7 @@
 // Problem Section Component
 ---
 
-<section class="z-20 w-full max-w-7xl mt-24 mr-auto mb-24 ml-auto pt-10 pr-2 pb-32 pl-2 relative">
+<section id="why-moontax" class="z-20 w-full max-w-7xl mt-0 mx-auto pt-10 px-6 mb-24 md:mb-32 relative">
     <div class="group overflow-hidden bg-gradient-to-br from-white/10 to-white/0 z-10 rounded-[2.5rem] mb-6 relative backdrop-blur-lg" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1)); --border-radius-before: 2.5rem">
         <!-- Background Glow Effect -->
         <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-tr from-red-500/10 via-transparent to-transparent opacity-40 pointer-events-none"></div>
@@ -15,41 +15,41 @@
                 </div>
                 
                 <h2 class="leading-[1.1] md:text-4xl text-3xl font-semibold text-white tracking-tight font-manrope mt-6 mb-6">
-                    Crypto Taxes Are Hard — And Missing One Detail Can Trigger an IRS Red Flag
+                    Crypto Taxes are a Mess — And the IRS is Watching
                 </h2>
                 
                 <div class="space-y-4 text-lg text-gray-400 font-sans leading-relaxed">
-                    <p>Between wallets, centralized exchanges, DeFi platforms, staking rewards, and trading bots, most investors end up with inconsistent data.</p>
+                    <p>Traditional accountants don't understand blockchain. Generic software fails on DeFi. Meanwhile, IRS enforcement is ramping up, and years of unreconciled trading activity are piling up.</p>
                     <ul class="space-y-2 text-base">
-                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Missing cost basis</li>
-                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Duplicate transactions</li>
-                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Misclassified income</li>
-                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Conflicts between CEX and DEX data</li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Exchange data gaps & missing cost basis</li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> DeFi complexity that software can't handle</li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Years of trading chaos across multiple wallets</li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Anxiety about potential IRS audits</li>
                     </ul>
                     <div class="pt-6">
-                        <a href="#" class="text-orange-400 hover:text-white font-medium inline-flex items-center gap-2 transition-colors">
-                            Get a Free Data Health Check <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        <a href="/form" class="text-orange-400 hover:text-white font-medium inline-flex items-center gap-2 transition-colors">
+                            Get My Free Audit <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- Visual Content: Health Check UI -->
-            <div class="relative min-h-[500px] bg-zinc-950/30 border-l border-white/5 overflow-hidden font-geist flex items-center justify-center">
+            <div class="relative min-h-[350px] md:min-h-[500px] bg-zinc-950/30 border-t md:border-t-0 md:border-l border-white/5 overflow-hidden font-geist flex items-center justify-center">
                 <!-- Floating Status Card -->
-                <div class="z-10 w-[90%] max-w-md p-6 relative">
+                <div class="z-10 w-[90%] max-w-md py-8 md:p-6 relative">
                     <div class="rounded-2xl bg-zinc-900/90 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden">
                         <!-- Header -->
                         <div class="p-5 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
                             <div>
-                                <h4 class="text-white font-normal font-sans text-sm tracking-wide">Account Health</h4>
+                                <h4 class="text-white font-normal font-sans text-sm tracking-wide">Data Health Status</h4>
                                 <div class="flex items-center gap-2 mt-1">
                                     <span class="relative flex h-2 w-2 shrink-0">
                                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                       <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                                     </span>
                                     <p class="text-red-500 text-xs font-normal tracking-wide">
-                                        Action Required
+                                        Audit Risk: High
                                     </p>
                                 </div>
                             </div>
@@ -62,11 +62,11 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-200 font-normal">Wallet #1 (ETH)</span>
-                                        <span class="text-red-400 text-xs mt-0.5 font-normal">Missing cost basis</span>
+                                        <span class="text-gray-200 font-normal">DeFi Wallet (MetaMask)</span>
+                                        <span class="text-red-400 text-xs mt-0.5 font-normal">Missing cost basis - 452 txs</span>
                                     </div>
                                 </div>
-                                <span class="text-red-400 font-mono">-4 txs</span>
+                                <span class="text-red-400 font-mono text-[10px] border border-red-500/30 px-1.5 py-0.5 rounded">ERROR</span>
                             </div>
                             <div class="p-3.5 flex items-center justify-between hover:bg-white/5 transition-colors">
                                 <div class="flex items-center gap-3">
@@ -74,11 +74,35 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-200 font-normal">Exchange Sync</span>
-                                        <span class="text-orange-400 text-xs mt-0.5 font-normal">API Disconnected</span>
+                                        <span class="text-gray-200 font-normal">Binance Account</span>
+                                        <span class="text-orange-400 text-xs mt-0.5 font-normal">API Data Gap (2021-2023)</span>
                                     </div>
                                 </div>
-                                <span class="text-orange-400 font-mono">Link</span>
+                                <span class="text-orange-400 font-mono text-[10px] border border-orange-500/30 px-1.5 py-0.5 rounded">FIX</span>
+                            </div>
+                            <div class="p-3.5 flex items-center justify-between hover:bg-white/5 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-200 font-normal">Phantom (Solana)</span>
+                                        <span class="text-zinc-500 text-xs mt-0.5 font-normal">Unclassified Staking Rewards</span>
+                                    </div>
+                                </div>
+                                <span class="text-zinc-500 font-mono text-[10px] border border-zinc-500/30 px-1.5 py-0.5 rounded">CHECK</span>
+                            </div>
+                            <div class="p-3.5 flex items-center justify-between hover:bg-white/5 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-200 font-normal">Ledger Hardware</span>
+                                        <span class="text-red-400 text-xs mt-0.5 font-normal">Internal Transfer Loop</span>
+                                    </div>
+                                </div>
+                                <span class="text-red-400 font-mono text-[10px] border border-red-500/30 px-1.5 py-0.5 rounded">REPAIR</span>
                             </div>
                         </div>
                     </div>
@@ -87,9 +111,10 @@
         </div>
     </div>
 
-    <!-- Solution Cards -->
-    <div class="text-center mb-12 mt-24">
-        <h2 class="text-3xl md:text-5xl font-medium text-white font-manrope mb-4">We Turn Crypto Chaos Into Clean Reports</h2>
+    <!-- Solution Section (Intro) -->
+    <div class="text-center mb-12 mt-12 md:mt-24">
+        <h2 class="text-3xl md:text-5xl font-medium text-white font-manrope mb-4">We are Specialists, Not Generalists</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">We decode complex blockchain transactions and accurately categorize every trade, transfer, and transaction for IRS compliance.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -98,25 +123,24 @@
             <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-6 text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
             </div>
-            <h3 class="text-xl font-semibold text-white mb-3 font-manrope">Full Reconciliation</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">We consolidate all wallets, exchanges, DeFi protocols, NFTs, and bots — then clean, map, classify, and verify every transaction manually and with AI.</p>
+            <h3 class="text-xl font-semibold text-white mb-3 font-manrope">Complex Data Reconciliation</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">We specialize in unraveling years of trading chaos, DeFi, staking, and high-volume transaction histories that break generic software.</p>
         </div>
         <!-- Card 2 -->
         <div class="group overflow-hidden flex flex-col hover:border-white/20 transition-colors duration-500 bg-gradient-to-br from-white/5 to-white/0 rounded-[2rem] backdrop-blur-lg p-8 border border-white/10">
             <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-6 text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             </div>
-            <h3 class="text-xl font-semibold text-white mb-3 font-manrope">CPA-Prepared Reports</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Once reconciled, our CPAs generate accurate tax reports (Form 8949, Schedule D, income schedules) ready for filing.</p>
+            <h3 class="text-xl font-semibold text-white mb-3 font-manrope">Platform Integration</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">We work within your preferred crypto tax platform (CoinTracker, Koinly, etc.) to ensure your data is clean where you need it.</p>
         </div>
         <!-- Card 3 -->
         <div class="group overflow-hidden flex flex-col hover:border-white/20 transition-colors duration-500 bg-gradient-to-br from-white/5 to-white/0 rounded-[2rem] backdrop-blur-lg p-8 border border-white/10">
             <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-6 text-white">
                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
             </div>
-            <h3 class="text-xl font-semibold text-white mb-3 font-manrope">Built-In Audit Defense</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Every client receives documentation strong enough to withstand IRS review. For high-risk cases, our tax attorney can provide legal opinion letters.</p>
+            <h3 class="text-xl font-semibold text-white mb-3 font-manrope">Full Ecosystem Support</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Backed by CPAI automation, Olson & Partners Law for legal opinions, and Securus Advisors for tax strategy and filing.</p>
         </div>
     </div>
 </section>
-

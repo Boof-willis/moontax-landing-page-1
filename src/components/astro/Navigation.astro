@@ -2,25 +2,27 @@
 // Navigation Component
 ---
 
-<div class="fixed flex w-full z-50 pt-6 pr-4 pl-4 top-0 left-0 justify-center">
-    <nav class="shadow-black/50 flex md:gap-12 md:w-auto bg-black/60 w-full max-w-5xl rounded-full pt-2 pr-2 pb-2 pl-6 shadow-2xl backdrop-blur-xl gap-x-8 gap-y-8 items-center justify-between z-50" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 9999px">
+<div class="fixed flex w-full z-50 pt-6 px-6 top-0 left-0 justify-center">
+    <nav class="shadow-black/50 flex bg-black/60 w-full max-w-[1000px] rounded-full pt-2 pr-2 pb-2 pl-6 shadow-2xl backdrop-blur-xl gap-x-8 gap-y-8 items-center justify-between z-50" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 9999px">
         <div class="flex items-center gap-3 shrink-0">
             <!-- MoonTax Logo -->
-            <img src="https://cdn.prod.website-files.com/6602e1800d6eea53ab44d610/66030d3bba8bcd44a766d010_MoonTax%20Full.svg" alt="MoonTax" class="h-7 w-auto" />
-        </div>
-        
-        <!-- Desktop Links -->
-        <div class="hidden md:flex items-center gap-6">
-            <a href="#" class="text-xs font-medium text-gray-400 hover:text-white transition-colors font-sans">Services</a>
-            <a href="#" class="text-xs font-medium text-gray-400 hover:text-white transition-colors font-sans">Who We Serve</a>
-            <a href="#" class="text-xs font-medium text-gray-400 hover:text-white transition-colors font-sans">Pricing</a>
-            <a href="#" class="text-xs font-medium text-gray-400 hover:text-white transition-colors font-sans">Resources</a>
+            <a href="https://moontax.com">
+                <img src="https://cdn.prod.website-files.com/6602e1800d6eea53ab44d610/66030d3bba8bcd44a766d010_MoonTax%20Full.svg" alt="MoonTax" class="h-7 w-auto" />
+            </a>
         </div>
 
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#why-moontax" class="text-xs font-medium text-zinc-400 hover:text-white transition-colors uppercase tracking-widest font-sans">Why MoonTax</a>
+            <a href="#who-we-serve" class="text-xs font-medium text-zinc-400 hover:text-white transition-colors uppercase tracking-widest font-sans">Who We Serve</a>
+            <a href="#pricing" class="text-xs font-medium text-zinc-400 hover:text-white transition-colors uppercase tracking-widest font-sans">Pricing</a>
+            <a href="#faq" class="text-xs font-medium text-zinc-400 hover:text-white transition-colors uppercase tracking-widest font-sans">FAQ</a>
+        </div>
+        
         <!-- Desktop & Mobile Actions -->
         <div class="flex items-center gap-4 shrink-0">
             <!-- Desktop CTA -->
-            <button class="hidden md:inline-flex group relative overflow-hidden rounded-full p-[1px] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+            <a href="/form" class="hidden md:inline-flex group relative overflow-hidden rounded-full p-[1px] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
                 <style>
                     @property --border-angle {
                         syntax: "<angle>";
@@ -49,37 +51,37 @@
                 
                 <!-- Button Surface & Content -->
                 <span class="relative flex items-center justify-center gap-2 uppercase transition-colors duration-300 group-hover:text-white text-xs font-medium text-zinc-400 tracking-widest bg-zinc-900 rounded-full pt-2.5 pr-6 pb-2.5 pl-6 h-full w-full z-10">
-                    <span>Book Strategy Call</span>
+                    <span>Get My Free Audit</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-0.5">
                         <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
                     </svg>
                 </span>
-            </button>
+            </a>
 
             <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-btn" class="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors z-50">
                 <span class="sr-only">Open menu</span>
-                <div class="flex flex-col gap-1.5 w-5 transition-all duration-300 origin-center">
-                    <span class="w-full h-0.5 bg-white rounded-full transition-all duration-300"></span>
-                    <span class="w-full h-0.5 bg-white rounded-full transition-all duration-300"></span>
+                <div class="relative w-5 h-3">
+                    <span class="absolute top-0 left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
                 </div>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 translate-x-full transition-transform duration-300 md:hidden flex flex-col pt-32 px-6">
+    <div id="mobile-menu" class="fixed inset-0 h-screen w-screen bg-black/70 backdrop-blur-2xl z-40 -translate-y-full transition-transform duration-500 md:hidden flex flex-col pt-32 px-6">
         <div class="flex flex-col gap-8 text-center">
-            <a href="#" class="text-2xl font-medium text-gray-300 hover:text-white font-manrope">Services</a>
-            <a href="#" class="text-2xl font-medium text-gray-300 hover:text-white font-manrope">Who We Serve</a>
-            <a href="#" class="text-2xl font-medium text-gray-300 hover:text-white font-manrope">Pricing</a>
-            <a href="#" class="text-2xl font-medium text-gray-300 hover:text-white font-manrope">Resources</a>
+            <a href="#why-moontax" class="text-2xl font-medium text-zinc-400 hover:text-white transition-colors font-manrope">Why MoonTax</a>
+            <a href="#who-we-serve" class="text-2xl font-medium text-zinc-400 hover:text-white transition-colors font-manrope">Who We Serve</a>
+            <a href="#pricing" class="text-2xl font-medium text-zinc-400 hover:text-white transition-colors font-manrope">Pricing</a>
+            <a href="#faq" class="text-2xl font-medium text-zinc-400 hover:text-white transition-colors font-manrope">FAQ</a>
             
             <div class="h-px bg-white/10 w-full my-4"></div>
             
-            <button class="w-full py-4 bg-orange-500 text-white font-bold rounded-xl uppercase tracking-widest text-sm hover:bg-orange-600 transition-colors">
-                Book Strategy Call
-            </button>
+            <a href="/form" class="w-full py-4 bg-orange-500 text-white font-bold rounded-full uppercase tracking-widest text-center text-sm hover:bg-orange-600 transition-colors">
+                Get My Free Audit
+            </a>
         </div>
     </div>
 </div>
@@ -95,17 +97,17 @@
         
         if (isOpen) {
             // Open menu
-            menu?.classList.remove('translate-x-full');
+            menu?.classList.remove('-translate-y-full');
             document.body.style.overflow = 'hidden'; // Prevent scrolling
             
             // Animate burger to X
             if (bars && bars.length === 2) {
-                bars[0].style.transform = 'rotate(45deg) translate(2px, 6px)';
-                bars[1].style.transform = 'rotate(-45deg) translate(2px, -6px)';
+                bars[0].style.transform = 'translateY(5px) rotate(45deg)';
+                bars[1].style.transform = 'translateY(-5px) rotate(-45deg)';
             }
         } else {
             // Close menu
-            menu?.classList.add('translate-x-full');
+            menu?.classList.add('-translate-y-full');
             document.body.style.overflow = ''; // Enable scrolling
             
             // Animate X back to burger
@@ -120,7 +122,7 @@
     menu?.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             isOpen = false;
-            menu?.classList.add('translate-x-full');
+            menu?.classList.add('-translate-y-full');
             document.body.style.overflow = '';
             
             if (bars && bars.length === 2) {

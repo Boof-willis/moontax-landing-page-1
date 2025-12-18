@@ -2,43 +2,25 @@
 // Footer Component
 ---
 
-<footer class="relative w-full bg-zinc-900/30 pt-24 pb-8 border-t border-white/5 backdrop-blur-sm z-20">
+<footer class="relative w-full bg-zinc-900/30 pt-12 pb-12 border-t border-white/5 backdrop-blur-sm z-20">
     <div class="w-full max-w-7xl mx-auto px-6">
-        <div class="grid lg:grid-cols-12 gap-16 mb-24">
-            <div class="lg:col-span-5 flex flex-col items-start">
-                <img src="https://cdn.prod.website-files.com/6602e1800d6eea53ab44d610/66030d3bba8bcd44a766d010_MoonTax%20Full.svg" alt="MoonTax" class="h-8 w-auto mb-4" />
-                <p class="text-zinc-500 text-sm font-sans max-w-xs">
-                    Accurate, Fast, and Fully Defensible Crypto Tax Intelligence.
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                <a href="https://moontax.com">
+                    <img src="https://cdn.prod.website-files.com/6602e1800d6eea53ab44d610/66030d3bba8bcd44a766d010_MoonTax%20Full.svg" alt="MoonTax" class="h-8 w-auto mb-4" />
+                </a>
+                <p class="text-zinc-500 text-sm font-sans max-w-md">
+                    Accurate, Fast, and Fully Defensible Crypto Tax Intelligence. Over $1B in transactions reconciled.
                 </p>
             </div>
 
-            <div class="lg:col-span-7">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
-                    <div class="flex flex-col gap-8">
-                        <h4 class="text-base font-medium text-white font-manrope">Company</h4>
-                        <div class="flex flex-col gap-4">
-                            <a href="#" class="text-zinc-400 hover:text-white transition-colors text-sm font-sans">About Us</a>
-                            <a href="#" class="text-zinc-400 hover:text-white transition-colors text-sm font-sans">Careers</a>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-8">
-                        <h4 class="text-base font-medium text-white font-manrope">Services</h4>
-                        <div class="flex flex-col gap-4">
-                            <a href="#" class="text-zinc-400 hover:text-white transition-colors text-sm font-sans">Reconciliation</a>
-                            <a href="#" class="text-zinc-400 hover:text-white transition-colors text-sm font-sans">Audit Defense</a>
-                            <a href="#" class="text-zinc-400 hover:text-white transition-colors text-sm font-sans">Pricing</a>
-                        </div>
-                    </div>
+            <div class="flex flex-col items-center md:items-end gap-4 text-center md:text-right">
+                <div class="flex flex-wrap justify-center md:justify-end items-center gap-x-8 gap-y-2">
+                    <a href="https://moontax.com/legal/privacy-policy" class="text-xs text-zinc-500 hover:text-white transition-colors font-sans">Privacy Policy</a>
+                    <a href="https://moontax.com/legal/privacy-policy" class="text-xs text-zinc-500 hover:text-white transition-colors font-sans">Terms of Service</a>
                 </div>
-            </div>
-        </div>
-
-        <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
-            <p class="text-xs text-zinc-500 font-sans">Copyright © MoonTax</p>
-            <div class="flex items-center gap-10">
-                <a href="#" class="text-xs text-zinc-500 hover:text-white transition-colors font-sans">Terms of Service</a>
+                <p class="text-xs text-zinc-500 font-sans">Copyright © {new Date().getFullYear()} MoonTax. All rights reserved.</p>
             </div>
         </div>
     </div>
 </footer>
-
