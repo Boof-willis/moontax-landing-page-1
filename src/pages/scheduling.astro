@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SchedulingWidget from '../components/react/SchedulingWidget';
+---
+
+<BaseLayout title="Schedule Your Priority Audit | MoonTax">
+    <main class="min-h-screen relative z-[60] overflow-y-auto pt-24 pb-12">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <SchedulingWidget client:load />
+        </div>
+    </main>
+</BaseLayout>
+

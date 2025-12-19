@@ -2,6 +2,53 @@
 import HeroCarousel from '../react/HeroCarousel';
 ---
 
+<style>
+    @property --border-angle {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 0deg;
+    }
+    
+    @property --glow-opacity {
+        syntax: "<number>";
+        inherits: false;
+        initial-value: 0;
+    }
+    
+    @keyframes border-spin-anim {
+        to {
+            --border-angle: 360deg;
+        }
+    }
+    
+    @keyframes dots-move { 
+        0% { background-position: 0 0; } 
+        100% { background-position: 24px 24px; } 
+    }
+    
+    .animate-border-spin {
+        animation: border-spin-anim 3s linear infinite;
+    }
+    
+    .orange-glow {
+        opacity: 0;
+        transition: opacity 500ms ease-out;
+        will-change: opacity;
+        transform: translateZ(0);
+    }
+    
+    .group:hover .orange-glow {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+    }
+
+    .hero-badge {
+        position: relative;
+        --border-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
+        --border-radius-before: 9999px;
+    }
+</style>
+
 <!-- Background Effects (Scrolling) -->
 <div class="absolute inset-0 w-full h-full -z-20 pointer-events-none overflow-hidden">
     <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/10 via-zinc-900/20 to-black"></div>
@@ -44,7 +91,7 @@ import HeroCarousel from '../react/HeroCarousel';
         <div class="text-center max-w-5xl z-10 mt-24 mr-auto mb-24 ml-auto pr-6 pl-6 relative">
             
             <!-- Badge -->
-            <div class="[animation:fadeSlideIn_1s_ease-out_0.8s_both] animate-on-scroll inline-flex transition-transform hover:scale-105 cursor-pointer group animate bg-gradient-to-br from-white/10 to-white/0 rounded-full mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center" style="position: relative; --border-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1)); --border-radius-before: 9999px">
+            <div class="hero-badge [animation:fadeSlideIn_1s_ease-out_0.8s_both] animate-on-scroll inline-flex transition-transform hover:scale-105 cursor-pointer group animate bg-gradient-to-br from-white/10 to-white/0 rounded-full mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center">
                 <span class="flex h-1.5 w-1.5 rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:animate-pulse"></span>
                 <span class="text-xs font-medium text-orange-100/80 tracking-wide group-hover:text-white transition-colors font-sans">2025 Tax Season · Filing in 2026</span>
             </div>
@@ -65,47 +112,6 @@ import HeroCarousel from '../react/HeroCarousel';
         <!-- CTAs -->
         <div class="[animation:fadeSlideIn_1s_ease-out_1.4s_both] animate-on-scroll flex flex-col items-center justify-center gap-10 mb-12 animate">
             <a href="/form" class="comet-button group flex overflow-hidden uppercase transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_-10px_rgba(234,88,12,0.5)] focus:outline-none text-sm font-medium text-white tracking-widest font-geist rounded-full pt-5 pr-6 pb-5 pl-6 md:pr-12 md:pl-12 relative items-center justify-center cursor-pointer [background:linear-gradient(#3f3f46,#27272a)_padding-box,conic-gradient(from_var(--border-angle),rgb(24_24_27/.48)_80%,_#ea580c_86%,_#fb923c_90%,_#ea580c_94%,_rgb(24_24_27/.48))_border-box] border border-transparent animate-border-spin">
-                    <style>
-                        @property --border-angle {
-                            syntax: "<angle>";
-                            inherits: false;
-                            initial-value: 0deg;
-                        }
-                        
-                        @property --glow-opacity {
-                            syntax: "<number>";
-                            inherits: false;
-                            initial-value: 0;
-                        }
-                        
-                        @keyframes border-spin-anim {
-                            to {
-                                --border-angle: 360deg;
-                            }
-                        }
-                        
-                        @keyframes dots-move { 
-                            0% { background-position: 0 0; } 
-                            100% { background-position: 24px 24px; } 
-                        }
-                        
-                        .animate-border-spin {
-                            animation: border-spin-anim 3s linear infinite;
-                        }
-                        
-                        .orange-glow {
-                            opacity: 0;
-                            transition: opacity 500ms ease-out;
-                            will-change: opacity;
-                            transform: translateZ(0);
-                        }
-                        
-                        .group:hover .orange-glow {
-                            opacity: 1;
-                            transition: opacity 300ms ease-in;
-                        }
-                    </style>
-
                     <!-- Inner Background & Effects -->
                     <div class="-z-10 overflow-hidden bg-zinc-800 rounded-full absolute top-[2px] right-[2px] bottom-[2px] left-[2px]">
                         <!-- Light Monotone Gradient Background -->

@@ -2,8 +2,32 @@
 // Navigation Component
 ---
 
+<style>
+    @property --border-angle {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 0deg;
+    }
+    
+    @keyframes border-spin-anim {
+        to {
+            --border-angle: 360deg;
+        }
+    }
+    
+    .animate-border-spin-nav {
+        animation: border-spin-anim 3s linear infinite;
+    }
+
+    .nav-container {
+        position: relative;
+        --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2));
+        --border-radius-before: 9999px;
+    }
+</style>
+
 <div class="fixed flex w-full z-50 pt-6 px-6 top-0 left-0 justify-center">
-    <nav class="shadow-black/50 flex bg-black/60 w-full max-w-[1000px] rounded-full pt-2 pr-2 pb-2 pl-6 shadow-2xl backdrop-blur-xl gap-x-8 gap-y-8 items-center justify-between z-50" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 9999px">
+    <nav class="nav-container shadow-black/50 flex bg-black/60 w-full max-w-[1000px] rounded-full pt-2 pr-2 pb-2 pl-6 shadow-2xl backdrop-blur-xl gap-x-8 gap-y-8 items-center justify-between z-50">
         <div class="flex items-center gap-3 shrink-0">
             <!-- MoonTax Logo -->
             <a href="https://moontax.com">
@@ -23,23 +47,6 @@
         <div class="flex items-center gap-4 shrink-0">
             <!-- Desktop CTA -->
             <a href="/form" class="hidden md:inline-flex group relative overflow-hidden rounded-full p-[1px] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
-                <style>
-                    @property --border-angle {
-                        syntax: "<angle>";
-                        inherits: false;
-                        initial-value: 0deg;
-                    }
-                    
-                    @keyframes border-spin-anim {
-                        to {
-                            --border-angle: 360deg;
-                        }
-                    }
-                    
-                    .animate-border-spin-nav {
-                        animation: border-spin-anim 3s linear infinite;
-                    }
-                </style>
                 
                 <!-- Static Border (Default) -->
                 <div class="absolute inset-0 rounded-full border border-white/10"></div>
