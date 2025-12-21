@@ -128,25 +128,14 @@ export default function MultiStepForm() {
       // Submit lead data to webhook immediately
       try {
         const rawPhone = formData.phone.replace(/[^\d]/g, '');
-        const cleanPhone = rawPhone.length === 10 ? `1${rawPhone}` : rawPhone;
-        const payload = {
-          ...formData,
-          phone: cleanPhone,
-          lead_score: score,
-          priority_level: level,
-          full_name: formData.name,
-          // Activity as comma separated string for easier CRM mapping
-          activity_list: formData.activity.join(', ')
-        };
-        await fetch('https://services.leadconnectorhq.com/hooks/wdySJSgT6vvj48a9VuHu/webhook-trigger/8e70c8c9-62c2-48bc-ba02-89798bbf3f51', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-        console.log('Lead successfully submitted to CRM');
-        // Build redirect URL
+        // Webhook still gets the 1 prefix if 10 digits for CRM consistency
+        const webhookPhone = rawPhone.length === 10 ? `1${rawPhone}` : rawPhone;
+        // URL parameter for GHL widget gets exactly 10 digits (stripping leading 1 if present)
+        const cleanPhone = rawPhone.length === 11 && rawPhone.startsWith('1') 
+          ? rawPhone.slice(1) 
+          : rawPhone; 
+        
+        // Build shared redirect params for both success and catch blocks
         const nameParts = formData.name.trim().split(' ');
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
@@ -157,17 +146,74 @@ export default function MultiStepForm() {
         redirectParams.set('last_name', lastName);
         redirectParams.set('email', formData.email);
         redirectParams.set('phone', cleanPhone);
+        
         // Pass through tracking
         if (formData.utm_source) redirectParams.set('utm_source', formData.utm_source);
         if (formData.utm_medium) redirectParams.set('utm_medium', formData.utm_medium);
         if (formData.utm_campaign) redirectParams.set('utm_campaign', formData.utm_campaign);
         if (formData.gclid) redirectParams.set('gclid', formData.gclid);
         if (formData.fbclid) redirectParams.set('fbclid', formData.fbclid);
-        window.location.href = `/scheduling?${redirectParams.toString()}`;
+
+        const payload = {
+          ...formData,
+          phone: webhookPhone,
+          lead_score: score,
+          priority_level: level,
+          full_name: formData.name,
+          // Activity as comma separated string for easier CRM mapping
+          activity_list: formData.activity.join(', ')
+        };
+
+        await fetch('https://services.leadconnectorhq.com/hooks/wdySJSgT6vvj48a9VuHu/webhook-trigger/8e70c8c9-62c2-48bc-ba02-89798bbf3f51', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+        
+        console.log('Lead successfully submitted to CRM');
+        
+        // Redirect to external GHL calendar pages based on priority
+        const CALENDAR_REDIRECT_URLS = {
+          high: 'https://consultation.moontax.com/hp',
+          medium: 'https://consultation.moontax.com/mp',
+          low: 'https://consultation.moontax.com/lp'
+        };
+        
+        const redirectUrl = CALENDAR_REDIRECT_URLS[level];
+        const externalParams = new URLSearchParams();
+        
+        // Pass contact info as URL parameters
+        externalParams.set('full_name', formData.name);
+        externalParams.set('email', formData.email);
+        externalParams.set('phone', cleanPhone);
+        
+        window.location.href = `${redirectUrl}?${externalParams.toString()}`;
+        
       } catch (error) {
         console.error('Error submitting lead to webhook:', error);
-        // Still redirect even if webhook fails so we don't block the user
-        window.location.href = `/scheduling?priority=${level}&full_name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+        
+        // Recalculate basic params for catch block to be safe
+        const score = calculateLeadScore(formData);
+        const level = getPriorityLevel(score);
+        const rawPhone = formData.phone.replace(/[^\d]/g, '');
+        const cleanPhone = rawPhone.length === 11 && rawPhone.startsWith('1') ? rawPhone.slice(1) : rawPhone;
+
+        const CALENDAR_REDIRECT_URLS = {
+          high: 'https://consultation.moontax.com/hp',
+          medium: 'https://consultation.moontax.com/mp',
+          low: 'https://consultation.moontax.com/lp'
+        };
+        
+        const redirectUrl = CALENDAR_REDIRECT_URLS[level];
+        const externalParams = new URLSearchParams();
+        
+        externalParams.set('full_name', formData.name);
+        externalParams.set('email', formData.email);
+        externalParams.set('phone', cleanPhone);
+        
+        window.location.href = `${redirectUrl}?${externalParams.toString()}`;
       }
       return;
     }

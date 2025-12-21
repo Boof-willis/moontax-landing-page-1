@@ -19,15 +19,56 @@ export default function SchedulingWidget() {
     const priority = (params.get('priority') as 'high' | 'medium' | 'low') || 'low';
     const baseUrl = CALENDAR_URLS[priority];
     
-    // Minimal params to ensure it works correctly
+    // Build the pre-filled URL for the iframe
     const calendarParams = new URLSearchParams();
-    const fields = ['full_name', 'email', 'phone', 'first_name', 'last_name'];
-    fields.forEach(field => {
-      const val = params.get(field);
-      if (val) calendarParams.append(field, val);
+    calendarParams.set('embed', 'true');
+    calendarParams.set('primaryColor', 'f97316'); // Removed # to prevent blue color override
+
+    // Pass through relevant lead info with common GHL variations
+    const name = params.get('full_name');
+    const email = params.get('email');
+    const phone = params.get('phone');
+    const firstName = params.get('first_name');
+    const lastName = params.get('last_name');
+
+    if (name) {
+      calendarParams.set('name', name);
+      calendarParams.set('full_name', name);
+    }
+    if (email) {
+      calendarParams.set('email', email);
+    }
+    if (phone) {
+      // GHL is configured to use "phone" query key
+      // Try the exact format - just the raw digits from the URL
+      calendarParams.set('phone', phone);
+    }
+    if (firstName) calendarParams.set('first_name', firstName);
+    if (lastName) calendarParams.set('last_name', lastName);
+
+    // Pass through ALL UTM and tracking parameters to GHL iframe
+    const trackingKeys = [
+      'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+      'gclid', 'fbclid', 'msclkid', 'ttclid', 'li_fat_id'
+    ];
+    
+    trackingKeys.forEach(key => {
+      const value = params.get(key);
+      if (value) {
+        calendarParams.set(key, value);
+      }
     });
 
     setIframeUrl(`${baseUrl}?${calendarParams.toString()}`);
+
+    // Debug: Log what we're sending to GHL
+    console.log('📞 Phone Debug:', {
+      rawPhoneFromURL: phone,
+      sentToGHL: phone,
+      queryKey: 'phone',
+      allParams: Object.fromEntries(calendarParams.entries()),
+      fullIframeURL: `${baseUrl}?${calendarParams.toString()}`
+    });
 
     return () => clearTimeout(timer);
   }, []);
@@ -50,7 +91,8 @@ export default function SchedulingWidget() {
         className="w-full"
         style={{ 
           opacity: isProcessing ? 0 : 1,
-          transition: 'opacity 0.5s ease-in-out'
+          transition: 'opacity 0.5s ease-in-out',
+          willChange: 'opacity'
         }}
       >
         <div className="text-center mb-12">
@@ -68,6 +110,8 @@ export default function SchedulingWidget() {
           height="800" 
           frameBorder="0"
           title="Scheduling Calendar"
+          allow="geolocation; microphone; camera; payment; autoplay"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-modals"
         />
 
         <p className="text-center text-sm text-zinc-500 mt-12 font-sans pb-12">

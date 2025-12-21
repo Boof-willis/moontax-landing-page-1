@@ -91,7 +91,7 @@ import HeroCarousel from '../react/HeroCarousel';
         <div class="text-center max-w-5xl z-10 mt-24 mr-auto mb-24 ml-auto pr-6 pl-6 relative">
             
             <!-- Badge -->
-            <div class="hero-badge [animation:fadeSlideIn_1s_ease-out_0.8s_both] animate-on-scroll inline-flex transition-transform hover:scale-105 cursor-pointer group animate bg-gradient-to-br from-white/10 to-white/0 rounded-full mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center">
+            <div class="hero-badge [animation:fadeSlideIn_1s_ease-out_0.8s_both] animate-on-scroll inline-flex transition-transform hover:scale-105 cursor-pointer group animate bg-gradient-to-br from-white/10 to-white/0 rounded-full mb-10 pt-1.5 pr-3 pb-1.5 pl-3 md:backdrop-blur-sm gap-x-2 gap-y-2 items-center">
                 <span class="flex h-1.5 w-1.5 rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:animate-pulse"></span>
                 <span class="text-xs font-medium text-orange-100/80 tracking-wide group-hover:text-white transition-colors font-sans">2025 Tax Season · Filing in 2026</span>
             </div>
@@ -99,7 +99,7 @@ import HeroCarousel from '../react/HeroCarousel';
             <!-- Heading with Carousel -->
             <h1 class="[animation:fadeSlideIn_1s_ease-out_1s_both] animate-on-scroll animate flex flex-col items-center justify-center leading-[1.05] text-5xl md:text-[96px] cursor-default font-medium tracking-tighter font-manrope mb-8">
                 <span class="inline-flex bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 pr-1">Your Data Has</span>
-                <span class="inline-flex text-white mt-2">
+                <span class="inline-flex text-white mt-1">
                     <HeroCarousel client:load />
                 </span>
             </h1>

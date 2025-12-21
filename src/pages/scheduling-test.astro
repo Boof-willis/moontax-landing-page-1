@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Scheduling | MoonTax</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { font-size: 48px; text-align: center; margin-bottom: 20px; }
+        h2 { font-size: 24px; text-align: center; color: #999; margin-bottom: 40px; }
+        iframe { display: block; margin: 0 auto; border: none; width: 100%; min-height: 800px; }
+        .debug { 
+            background: #111; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>You qualify for a priority consultation.</h1>
+        <h2>Select a time below and we'll send you a confirmation.</h2>
+        
+        <div class="debug" id="debug-info"></div>
+        
+        <iframe id="calendar-iframe" title="Scheduling Calendar"></iframe>
+    </div>
+
+    <script>
+        // Calendar URLs
+        const CALENDAR_URLS = {
+            high: "https://link.moontax.com/widget/booking/y2tkzj3S5lWUjZ9jOVF1",
+            medium: "https://link.moontax.com/widget/booking/RrlGl6e9DKVBvIEnxSxs",
+            low: "https://link.moontax.com/widget/booking/aA9L4145p0DmjUGBnBPq"
+        };
+
+        // Get URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const priority = params.get('priority') || 'low';
+        const baseUrl = CALENDAR_URLS[priority];
+        
+        // Build calendar URL with parameters
+        const calendarParams = new URLSearchParams();
+        
+        // Contact info
+        const name = params.get('full_name');
+        const email = params.get('email');
+        const phone = params.get('phone');
+        const firstName = params.get('first_name');
+        const lastName = params.get('last_name');
+
+        if (name) {
+            calendarParams.set('name', name);
+            calendarParams.set('full_name', name);
+        }
+        if (firstName) calendarParams.set('first_name', firstName);
+        if (lastName) calendarParams.set('last_name', lastName);
+        if (email) calendarParams.set('email', email);
+        if (phone) calendarParams.set('phone', phone);
+
+        // Build final URL
+        const iframeUrl = `${baseUrl}?${calendarParams.toString()}`;
+        
+        // Debug output
+        const debugInfo = {
+            'Priority Level': priority,
+            'Base URL': baseUrl,
+            'Phone from URL': phone || 'NOT PROVIDED',
+            'Email from URL': email || 'NOT PROVIDED',
+            'Name from URL': name || 'NOT PROVIDED',
+            'All Parameters': Object.fromEntries(calendarParams.entries()),
+            'Final iframe URL': iframeUrl
+        };
+        
+        document.getElementById('debug-info').innerHTML = '<strong>DEBUG INFO:</strong><br>' + 
+            Object.entries(debugInfo).map(([key, val]) => 
+                `${key}: ${typeof val === 'object' ? JSON.stringify(val) : val}`
+            ).join('<br>');
+        
+        console.log('🔥 ISOLATED TEST - GHL Debug:', debugInfo);
+        
+        // Set iframe source
+        document.getElementById('calendar-iframe').src = iframeUrl;
+    </script>
+</body>
+</html>
+

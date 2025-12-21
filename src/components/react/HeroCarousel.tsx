@@ -26,12 +26,13 @@ export default function HeroCarousel() {
 
   return (
     <span
-      className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-200 pb-2"
+      className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-200 px-4 py-2 -mx-4 -my-2"
       style={{
         transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out',
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(-10px)',
-        display: 'inline-block'
+        display: 'inline-flex',
+        lineHeight: '1.2'
       }}
     >
       {carouselTexts[currentIndex]}

@@ -7,7 +7,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
 }
 
 body { 
@@ -178,28 +178,6 @@ body {
     50% { transform: translate(-50%, -50%) scale(1.20); }
 }
 
-/* Progressive Blur CSS */
-.gradient-blur {
-    position: fixed;
-    z-index: 5;
-    inset: 0 0 auto 0;
-    height: 12%;
-    pointer-events: none;
-    /* Optimize blur performance */
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-}
-.gradient-blur>div, .gradient-blur::before, .gradient-blur::after { position: absolute; inset: 0; }
-.gradient-blur::before { content: ""; z-index: 1; backdrop-filter: blur(0.5px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 37.5%); }
-.gradient-blur>div:nth-of-type(1) { z-index: 2; backdrop-filter: blur(1px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 0) 50%); }
-.gradient-blur>div:nth-of-type(2) { z-index: 3; backdrop-filter: blur(2px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 62.5%); }
-.gradient-blur>div:nth-of-type(3) { z-index: 4; backdrop-filter: blur(4px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 0) 75%); }
-.gradient-blur>div:nth-of-type(4) { z-index: 5; backdrop-filter: blur(8px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 87.5%); }
-.gradient-blur>div:nth-of-type(5) { z-index: 6; backdrop-filter: blur(16px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%); }
-.gradient-blur>div:nth-of-type(6) { z-index: 7; backdrop-filter: blur(32px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 1) 100%); }
-.gradient-blur::after { content: ""; z-index: 8; backdrop-filter: blur(64px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 1) 100%); }
-
 /* Shared Styles */
 [style*="--border-gradient"]::before {
     content: "";
@@ -235,31 +213,6 @@ body {
 
 .group:hover .animate-infinite-scroll { 
     animation-play-state: paused; 
-}
-
-/* Performance: CSS Containment for sections */
-section {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 500px;
-}
-
-/* Optimize images and media */
-img, video {
-    content-visibility: auto;
-}
-
-/* Reduce paint areas */
-.backdrop-blur-xl,
-.backdrop-blur-lg,
-.backdrop-blur-md {
-    will-change: backdrop-filter;
-    transform: translateZ(0);
-}
-
-/* Optimize fixed elements */
-.fixed {
-    will-change: transform;
-    transform: translateZ(0);
 }
 
 /* Optimize animations - remove will-change when not animating */

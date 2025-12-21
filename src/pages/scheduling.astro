@@ -1,13 +1,137 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SchedulingWidget from '../components/react/SchedulingWidget';
+
+// Calendar URLs by priority level
+const CALENDAR_URLS = {
+  high: "https://link.moontax.com/widget/booking/y2tkzj3S5lWUjZ9jOVF1",
+  medium: "https://link.moontax.com/widget/booking/RrlGl6e9DKVBvIEnxSxs",
+  low: "https://link.moontax.com/widget/booking/aA9L4145p0DmjUGBnBPq"
+};
 ---
 
 <BaseLayout title="Schedule Your Priority Audit | MoonTax">
     <main class="min-h-screen relative z-[60] overflow-y-auto pt-24 pb-12">
         <div class="max-w-[1400px] mx-auto px-6">
-            <SchedulingWidget client:load />
+            
+            <!-- Loading State -->
+            <div id="loading-state" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
+                <div class="w-16 h-16 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mb-8"></div>
+                <h2 class="text-2xl font-manrope font-semibold text-white mb-3 text-center">Analyzing your tax situation...</h2>
+                <p class="text-zinc-400 text-center px-6">Matching you with the right specialist.</p>
+            </div>
+
+            <!-- Main Content -->
+            <div id="main-content" class="w-full" style="opacity: 0; transition: opacity 0.5s ease-in-out;">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-6xl font-manrope font-bold text-white mb-4">
+                        You qualify for a priority consultation.
+                    </h1>
+                    <h2 class="text-xl md:text-2xl text-zinc-400 font-sans">
+                        Select a time below and we'll send you a confirmation.
+                    </h2>
+                </div>
+
+                <!-- Iframe - Server rendered, URL built client-side -->
+                <iframe 
+                    id="calendar-iframe"
+                    width="100%" 
+                    height="800" 
+                    frameborder="0"
+                    title="Scheduling Calendar"
+                    allow="geolocation; microphone; camera; payment; autoplay"
+                ></iframe>
+
+                <p class="text-center text-sm text-zinc-500 mt-12 font-sans pb-12">
+                    Can't find a time that works? Email us at <a href="mailto:hello@moontax.com" class="text-orange-500 hover:text-orange-400 transition-colors">hello@moontax.com</a>
+                </p>
+            </div>
         </div>
     </main>
+
+    <script define:vars={{ CALENDAR_URLS }}>
+        // This runs immediately on page load (not after React hydration)
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const priority = params.get('priority') || 'low';
+            const baseUrl = CALENDAR_URLS[priority];
+            
+            // Build the pre-filled URL for the iframe
+            const calendarParams = new URLSearchParams();
+            
+            // Pass through contact info FIRST (before embed params)
+            const name = params.get('full_name');
+            const email = params.get('email');
+            const phone = params.get('phone');
+            const firstName = params.get('first_name');
+            const lastName = params.get('last_name');
+
+            if (name) {
+                calendarParams.set('name', name);
+                calendarParams.set('full_name', name);
+            }
+            if (firstName) calendarParams.set('first_name', firstName);
+            if (lastName) calendarParams.set('last_name', lastName);
+            if (email) {
+                calendarParams.set('email', email);
+            }
+            if (phone) {
+                calendarParams.set('phone', phone);
+            }
+
+            // Embed settings - DON'T use embed=true as it may override custom styles
+            // calendarParams.set('embed', 'true');
+            
+            // Try multiple color parameter variations
+            calendarParams.set('primaryColor', 'f97316');
+            calendarParams.set('primary_color', 'f97316');
+            calendarParams.set('color', 'f97316');
+            calendarParams.set('theme', 'f97316');
+
+            // Pass through ALL UTM and tracking parameters
+            const trackingKeys = [
+                'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+                'gclid', 'fbclid', 'msclkid', 'ttclid', 'li_fat_id'
+            ];
+            
+            trackingKeys.forEach(key => {
+                const value = params.get(key);
+                if (value) {
+                    calendarParams.set(key, value);
+                }
+            });
+
+            // Cache busting parameter to force fresh load
+            calendarParams.set('_t', Date.now().toString());
+
+            // Build iframe URL - Try WITHOUT embed parameter first
+            const iframeUrl = `${baseUrl}?${calendarParams.toString()}`;
+            
+            // Debug logging - EXPANDED
+            console.log('🎨 GHL Calendar Debug:', {
+                calendarURL: baseUrl,
+                rawPhoneFromURL: phone,
+                sentToGHL: phone,
+                queryKey: 'phone',
+                allParams: Object.fromEntries(calendarParams.entries()),
+                fullIframeURL: iframeUrl,
+                testDirectURL: 'Copy the fullIframeURL above and paste directly in browser to test'
+            });
+
+            // Set iframe src immediately
+            const iframe = document.getElementById('calendar-iframe');
+            if (iframe) {
+                iframe.src = iframeUrl;
+            }
+
+            // Show content after 2 seconds
+            setTimeout(() => {
+                const loading = document.getElementById('loading-state');
+                const content = document.getElementById('main-content');
+                
+                if (loading) loading.style.display = 'none';
+                if (content) content.style.opacity = '1';
+            }, 2000);
+        })();
+    </script>
 </BaseLayout>
 
