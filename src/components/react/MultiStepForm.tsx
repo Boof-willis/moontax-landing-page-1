@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 const steps = [
-  { id: 1, title: 'Situation' },
-  { id: 2, title: 'Challenge' },
-  { id: 3, title: 'Timeline' },
-  { id: 4, title: 'Contact' },
-  { id: 5, title: 'Booking' },
+  { id: 1, title: '1099-DA' },
+  { id: 2, title: 'Activity' },
+  { id: 3, title: 'Challenge' },
+  { id: 4, title: 'Timeline' },
+  { id: 5, title: 'Contact' },
+  { id: 6, title: 'Booking' },
 ];
 export default function MultiStepForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [progress, setProgress] = useState(0);
   const [formData, setFormData] = useState({
-    activity: [] as string[],
-    challenge: '',
-    timeline: '',
+    concern_1099da: '', // Q1: 1099-DA concern
+    activity: [] as string[], // Q2: Crypto activity (multi-select)
+    challenge: '', // Q3: Biggest challenge
+    timeline: '', // Q4: Timeline
     name: '',
     email: '',
     phone: '',
@@ -56,29 +58,46 @@ export default function MultiStepForm() {
   }, []);
   const calculateLeadScore = (data: typeof formData) => {
     let score = 0;
-    // Timeline scoring
+    
+    // Q1: 1099-DA concern scoring
+    const concern = data.concern_1099da.toLowerCase();
+    if (concern.includes('expect to receive')) score += 2;
+    else if (concern.includes('not sure')) score += 1;
+    
+    // Q2: Crypto activity scoring (take highest value from selected)
+    if (Array.isArray(data.activity) && data.activity.length > 0) {
+      let activityScore = 0;
+      data.activity.forEach(item => {
+        if (item.includes('DeFi') || item.includes('High-Volume') || item.includes('Trading Bots')) {
+          activityScore = Math.max(activityScore, 3);
+        } else if (item.includes('Mining') || item.includes('Staking')) {
+          activityScore = Math.max(activityScore, 2);
+        } else if (item.includes('NFTs') || item.includes('HODLing')) {
+          activityScore = Math.max(activityScore, 1);
+        }
+      });
+      score += activityScore;
+    }
+    
+    // Q3: Challenge scoring
+    const challenge = data.challenge.toLowerCase();
+    if (challenge.includes('irs audit') || challenge.includes('years of unreconciled')) {
+      score += 3;
+    } else if (challenge.includes('mess') || challenge.includes('wallets') || challenge.includes('generic software')) {
+      score += 2;
+    }
+    
+    // Q4: Timeline scoring
     if (data.timeline.includes('ASAP')) score += 3;
     else if (data.timeline.includes('Before the April')) score += 2;
-    // Challenge scoring
-    const challenge = data.challenge.toLowerCase();
-    if (challenge.includes('irs audit')) score += 3;
-    else if (challenge.includes('mess') || challenge.includes('years of unreconciled')) score += 2;
-    else if (challenge.includes('wallets') || challenge.includes('exchanges')) score += 2;
-    else if (challenge.includes('generic software')) score += 1; // Generic software failure often implies cost basis issues
-    // Activity scoring
-    if (Array.isArray(data.activity)) {
-      score += data.activity.length;
-      if (data.activity.some(a => a.includes('DeFi'))) score += 2;
-      if (data.activity.some(a => a.includes('High-Volume'))) score += 2;
-    }
-    // Ads bonus
-    if (data.gclid) score += 1;
-    if (data.fbclid) score += 1;
+    else if (data.timeline.includes('next few months')) score += 1;
+    // "Just exploring options" = 0 points
+    
     return score;
   };
   const getPriorityLevel = (score: number) => {
-    if (score >= 7) return 'high';
-    if (score >= 4) return 'medium';
+    if (score >= 9) return 'high';
+    if (score >= 5) return 'medium';
     return 'low';
   };
   const formatPhoneNumber = (value: string) => {
@@ -114,7 +133,7 @@ export default function MultiStepForm() {
     return () => clearTimeout(timer);
   }, [currentStep]);
   const nextStep = async () => {
-    if (currentStep === 4) {
+    if (currentStep === 5) {
       // Honeypot check
       if (formData.website) {
         console.warn('Bot detected via honeypot');
@@ -240,24 +259,29 @@ export default function MultiStepForm() {
     }));
   };
   const isStepValid = () => {
-    if (currentStep === 1) return formData.activity.length > 0;
-    if (currentStep === 2) return formData.challenge !== '';
-    if (currentStep === 3) return formData.timeline !== '';
-    if (currentStep === 4) return formData.name && formData.email && formData.phone && formData.consent;
+    if (currentStep === 1) return formData.concern_1099da !== '';
+    if (currentStep === 2) return formData.activity.length > 0;
+    if (currentStep === 3) return formData.challenge !== '';
+    if (currentStep === 4) return formData.timeline !== '';
+    if (currentStep === 5) return formData.name && formData.email && formData.phone && formData.consent;
     return true;
   };
   return (
-    <div className="w-full flex flex-col items-center justify-center px-6 md:px-0 py-12">
-      {/* Return Home Link */}
-      {currentStep < 5 && !isProcessing && (
-        <div className="w-full max-w-2xl mb-8 flex justify-start">
-          <a href="/" className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:-translate-x-1"><path d="m15 18-6-6 6-6"/></svg>
-            <span className="text-xs uppercase tracking-widest font-medium">Return Home</span>
-          </a>
-        </div>
-      )}
-      <div className="w-full max-w-2xl mx-auto relative z-[60] transition-all duration-500 overflow-hidden rounded-[2.5rem] bg-zinc-950/75 backdrop-blur-md border border-white/10 shadow-2xl">
+    <>
+      {/* Fixed MoonTax Logo at Top */}
+      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-11 px-6">
+        <a href="https://moontax.com" className="transition-opacity hover:opacity-80">
+          <img 
+            src="https://cdn.prod.website-files.com/6602e1800d6eea53ab44d610/66030d3bba8bcd44a766d010_MoonTax%20Full.svg" 
+            alt="MoonTax" 
+            className="h-8 w-auto" 
+          />
+        </a>
+      </div>
+      
+      {/* Centered Form Container */}
+      <div className="min-h-screen w-full flex items-center justify-center px-6 md:px-0 py-24">
+        <div className="w-full max-w-2xl mx-auto relative z-[60] transition-all duration-500 overflow-hidden rounded-[2.5rem] bg-zinc-950/75 backdrop-blur-md border border-white/10 shadow-2xl">
         {isProcessing ? (
           <div className="flex flex-col items-center justify-center py-24 md:py-32 animate-in fade-in duration-500 min-h-[400px]">
             <div className="w-16 h-16 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin mb-8"></div>
@@ -276,14 +300,53 @@ export default function MultiStepForm() {
             <div className="transition-all duration-500 p-8 md:p-12">
               <div className="mb-8 flex justify-between items-center">
                 <span className="text-xs font-mono text-orange-500 uppercase tracking-widest">
-                  Step {currentStep} of 4
+                  Step {currentStep} of 5
                 </span>
                 <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
                   {steps[Math.min(currentStep - 1, steps.length - 1)].title}
                 </span>
               </div>
-              {/* Step 1: Situation */}
+              {/* Step 1: 1099-DA Concern */}
               {currentStep === 1 && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
+                    Are you concerned about 1099-DA mismatch on your tax return?
+                  </h2>
+                  <p className="text-zinc-400 mb-8 font-sans">
+                    This helps us understand your situation.
+                  </p>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      "Yes, I expect to receive one this tax season",
+                      "I'm not sure — help me find out"
+                    ].map((option) => (
+                      <button
+                        key={option}
+                        onClick={() => {
+                          setFormData((prev) => ({ ...prev, concern_1099da: option }));
+                          setTimeout(nextStep, 300);
+                        }}
+                        className={`p-4 rounded-2xl border text-left text-sm font-medium transition-all flex items-center justify-between group cursor-pointer ${
+                          formData.concern_1099da === option
+                            ? 'bg-orange-500/10 border-orange-500 text-white'
+                            : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20 hover:bg-white/[0.07]'
+                        }`}
+                      >
+                        <span>{option}</span>
+                        <div className={`w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center ${
+                          formData.concern_1099da === option ? 'border-white bg-white' : 'border-zinc-700'
+                        }`}>
+                          {formData.concern_1099da === option && (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="text-orange-500"><path d="M20 6L9 17l-5-5"/></svg>
+                          )}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* Step 2: Crypto Activity */}
+              {currentStep === 2 && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
                     What best describes your crypto activity?
@@ -293,31 +356,31 @@ export default function MultiStepForm() {
                   </p>
                   <div className="flex flex-wrap gap-3">
                     {[
-                      'DeFi / DEX Power User', 
+                      'DeFi / DEX Power User',
                       'Mining',
-                      'High-Volume Trading', 
-                      'NFTs & Minting', 
-                      'Staking & Rewards', 
-                      'Trading Bots', 
-                      'Basic HODLing'
-                    ].map((type) => (
+                      'High-Volume Trading',
+                      'NFTs & Minting',
+                      'Staking & Rewards',
+                      'Trading Bots',
+                      'Basic HODLing',
+                    ].map((item) => (
                       <button
-                        key={type}
-                        onClick={() => toggleActivity(type)}
-                        className={`py-3 px-4 md:px-6 rounded-full border text-xs md:text-sm font-medium transition-all cursor-pointer text-center flex items-center justify-center whitespace-nowrap ${
-                          formData.activity.includes(type)
-                            ? 'bg-zinc-100 border-zinc-100 text-black shadow-[0_0_20px_rgba(255,255,255,0.1)]'
-                            : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20'
+                        key={item}
+                        onClick={() => toggleActivity(item)}
+                        className={`px-6 py-3 rounded-full border text-sm font-medium transition-all cursor-pointer ${
+                          formData.activity.includes(item)
+                            ? 'bg-orange-500/10 border-orange-500 text-white'
+                            : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20 hover:bg-white/[0.07]'
                         }`}
                       >
-                        {type}
+                        {item}
                       </button>
                     ))}
                   </div>
                 </div>
               )}
-              {/* Step 2: Pain Point */}
-              {currentStep === 2 && (
+              {/* Step 3: Challenge */}
+              {currentStep === 3 && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
                     What's your biggest challenge?
@@ -358,8 +421,8 @@ export default function MultiStepForm() {
                   </div>
                 </div>
               )}
-              {/* Step 3: Urgency */}
-              {currentStep === 3 && (
+              {/* Step 4: Timeline */}
+              {currentStep === 4 && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
                     When do you need this resolved?
@@ -399,8 +462,8 @@ export default function MultiStepForm() {
                   </div>
                 </div>
               )}
-              {/* Step 4: Contact */}
-              {currentStep === 4 && (
+              {/* Step 5: Contact */}
+              {currentStep === 5 && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
                     Final step: Your contact details
@@ -525,7 +588,7 @@ export default function MultiStepForm() {
                 </div>
               )}
               {/* Navigation Buttons */}
-              {(currentStep === 1 || currentStep === 4) && (
+              {(currentStep === 2 || currentStep === 5) && (
                 <div className="mt-12 flex items-center justify-end pt-8 border-t border-white/5">
                   <button
                     onClick={nextStep}
@@ -536,7 +599,7 @@ export default function MultiStepForm() {
                         : 'bg-white/10 text-zinc-600 cursor-not-allowed'
                     }`}
                   >
-                    {currentStep === 4 ? 'Get My Free Audit' : 'Continue'}
+                    {currentStep === 5 ? 'Get My Free Audit' : 'Continue'}
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                   </button>
                 </div>
@@ -545,6 +608,7 @@ export default function MultiStepForm() {
           </>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
