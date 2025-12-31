@@ -39,6 +39,9 @@ const {
     <!-- Defer non-critical scripts -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
+    
+    <!-- Allow pages to inject custom head content -->
+    <slot name="head" />
 </head>
 
 <body class="bg-black text-white antialiased overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200">
