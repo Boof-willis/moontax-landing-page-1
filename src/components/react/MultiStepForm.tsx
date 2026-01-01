@@ -553,7 +553,7 @@ export default function MultiStepForm() {
                         : 'bg-white/10 text-zinc-600 cursor-not-allowed'
                     }`}
                   >
-                    {currentStep === 4 ? 'Get My 30% Off' : 'Continue'}
+                    {currentStep === 4 ? 'Book My Free Consultation' : 'Continue'}
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                   </button>
                 </div>

@@ -8,7 +8,7 @@ interface Props {
 
 const { 
   title = 'MoonTax - Expert Crypto Tax Reconciliation & Data Cleaning',
-  description = 'Your 1099-DA only reports proceeds—not cost basis. That mismatch creates audit risk. MoonTax\'s Audit Defense Report documents exactly why your numbers are correct.'
+  description = 'Stop worrying about messy crypto data. We decode complex blockchain transactions, reconcile years of trading chaos, and deliver IRS-compliant reports. Reconciled over $1B in transactions.'
 } = Astro.props;
 ---
 
@@ -39,9 +39,6 @@ const {
     <!-- Defer non-critical scripts -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
-    
-    <!-- Allow pages to inject custom head content -->
-    <slot name="head" />
 </head>
 
 <body class="bg-black text-white antialiased overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200">
@@ -100,6 +97,57 @@ const {
             }
             
             sessionStorage.setItem('moontax_tracking', JSON.stringify(data));
+        })();
+    </script>
+
+    <!-- UTM Parameter Passing Script -->
+    <script is:inline>
+        (function() {
+            // Function to append UTM parameters to form links
+            function appendUTMsToFormLinks() {
+                // Get current URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                
+                // Get stored tracking data
+                const trackingData = JSON.parse(sessionStorage.getItem('moontax_tracking') || '{}');
+                
+                // Build query string from current URL params and stored data
+                const params = new URLSearchParams();
+                
+                // Add parameters from current URL first, then fall back to stored data
+                ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 
+                 'gclid', 'fbclid', 'msclkid', 'ttclid', 'li_fat_id'].forEach(param => {
+                    if (urlParams.has(param)) {
+                        params.set(param, urlParams.get(param));
+                    } else if (trackingData[param]) {
+                        params.set(param, trackingData[param]);
+                    }
+                });
+                
+                // Get all links pointing to /form (including those that already have params)
+                const formLinks = document.querySelectorAll('a[href^="/form"]');
+                
+                // Append parameters to each link if we have any
+                if (params.toString()) {
+                    formLinks.forEach(link => {
+                        const currentHref = link.getAttribute('href');
+                        const baseUrl = currentHref.split('?')[0];
+                        link.href = baseUrl + '?' + params.toString();
+                    });
+                }
+            }
+            
+            // Run on page load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', appendUTMsToFormLinks);
+            } else {
+                appendUTMsToFormLinks();
+            }
+            
+            // Also run after delays to catch any dynamically loaded links
+            setTimeout(appendUTMsToFormLinks, 100);
+            setTimeout(appendUTMsToFormLinks, 500);
+            setTimeout(appendUTMsToFormLinks, 1000);
         })();
     </script>
 

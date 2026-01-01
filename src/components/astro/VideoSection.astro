@@ -1,0 +1,247 @@
+---
+// Video Section Component
+---
+
+<section id="video-section" class="w-full max-w-6xl mx-auto px-6 mb-24 md:mb-32 relative z-20 mt-12 md:mt-20">
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-orange-500/20 bg-orange-500/5 mb-6">
+            <span class="text-xs font-semibold text-orange-200 uppercase tracking-widest font-sans">See How We Work</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-medium text-white font-manrope mb-4">
+            Expert Crypto Tax Reconciliation
+        </h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+            Watch how we transform messy crypto data into IRS-compliant tax reports.
+        </p>
+    </div>
+    
+    <!-- Video Container -->
+    <div id="video-container" class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-zinc-900/50 backdrop-blur-sm shadow-[0_20px_70px_-15px_rgba(0,0,0,0.8)]">
+        <!-- Aspect Ratio Container (16:9) -->
+        <div class="relative pb-[56.25%]">
+            <iframe 
+                id="moontax-video"
+                src="https://player.vimeo.com/video/929952847?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&background=0" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                class="absolute top-0 left-0 w-full h-full rounded-[2rem]"
+                title="MoonTax - Crypto Tax Reconciliation"
+            ></iframe>
+        </div>
+    </div>
+    
+    <!-- Optional: Trust indicators below video -->
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mt-12 opacity-60">
+        <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            <span class="text-xs font-medium uppercase tracking-widest text-zinc-400">$1B+ Reconciled</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span class="text-xs font-medium uppercase tracking-widest text-zinc-400">CPA-Backed</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span class="text-xs font-medium uppercase tracking-widest text-zinc-400">Fast Turnaround</span>
+        </div>
+    </div>
+</section>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script is:inline>
+    // Create PiP container and append directly to body to avoid stacking context issues
+    function createPipContainer() {
+        const pipHTML = `
+            <div id="pip-container" style="position: fixed; bottom: 24px; right: 24px; width: 320px; z-index: 2147483647; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 70px -15px rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.2); background: black; opacity: 0; pointer-events: none; transition: opacity 0.3s;">
+                <div style="position: relative; padding-bottom: 56.25%;">
+                    <iframe 
+                        id="pip-video"
+                        src="https://player.vimeo.com/video/929952847?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&background=0" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                        title="MoonTax - Crypto Tax Reconciliation"
+                    ></iframe>
+                </div>
+                <button id="pip-close" style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 9999px; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; color: white; border: none; cursor: pointer; z-index: 10;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+                <div id="unmute-hint" style="position: absolute; bottom: 8px; left: 8px; padding: 6px 12px; border-radius: 9999px; background: rgba(0,0,0,0.8); color: white; font-size: 12px; display: flex; align-items: center; gap: 8px; z-index: 10;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><line x1="22" x2="16" y1="9" y2="15"></line><line x1="16" x2="22" y1="9" y2="15"></line></svg>
+                    Click to unmute
+                </div>
+            </div>
+        `;
+        
+        // Append directly to body
+        document.body.insertAdjacentHTML('beforeend', pipHTML);
+        
+        // Adjust for mobile
+        if (window.innerWidth >= 768) {
+            document.getElementById('pip-container').style.width = '400px';
+        }
+    }
+    
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createPipContainer);
+    } else {
+        createPipContainer();
+    }
+</script>
+
+<script>
+    // Wait for Vimeo API to load
+    function initVideoControls() {
+        const videoSection = document.getElementById('video-section');
+        const videoContainer = document.getElementById('video-container');
+        const mainVideoIframe = document.getElementById('moontax-video');
+        
+        // Wait for PiP to be created
+        let attempts = 0;
+        const checkPip = setInterval(() => {
+            const pipContainer = document.getElementById('pip-container');
+            const pipVideoIframe = document.getElementById('pip-video');
+            
+            if (pipContainer && pipVideoIframe || attempts > 20) {
+                clearInterval(checkPip);
+                
+                if (!pipContainer || !pipVideoIframe) {
+                    console.error('PiP elements not found');
+                    return;
+                }
+                
+                setupVideoControls(videoContainer, mainVideoIframe, pipContainer, pipVideoIframe);
+            }
+            attempts++;
+        }, 100);
+    }
+    
+    function setupVideoControls(videoContainer, mainVideoIframe, pipContainer, pipVideoIframe) {
+        // Initialize Vimeo players
+        const mainPlayer = new Vimeo.Player(mainVideoIframe);
+        const pipPlayer = new Vimeo.Player(pipVideoIframe);
+        
+        // Set both videos to muted by default
+        mainPlayer.setMuted(true);
+        pipPlayer.setMuted(true);
+        
+        let hasAutoPlayed = false;
+        let isPipMode = false;
+        let isPipClosed = false;
+        
+        const pipClose = document.getElementById('pip-close');
+        
+        // Function to show PiP
+        function showPip() {
+            if (isPipClosed) return;
+            
+            pipContainer.style.opacity = '1';
+            pipContainer.style.pointerEvents = 'auto';
+            
+            mainPlayer.getCurrentTime().then((currentTime) => {
+                pipPlayer.setCurrentTime(currentTime);
+                pipPlayer.play();
+                mainPlayer.pause();
+                isPipMode = true;
+            });
+        }
+        
+        // Function to hide PiP
+        function hidePip() {
+            pipContainer.style.opacity = '0';
+            pipContainer.style.pointerEvents = 'none';
+            
+            if (isPipMode) {
+                pipPlayer.getCurrentTime().then((currentTime) => {
+                    pipPlayer.pause();
+                    mainPlayer.setCurrentTime(currentTime);
+                    mainPlayer.play();
+                    isPipMode = false;
+                });
+            }
+        }
+        
+        // Intersection Observer for autoplay when scrolled into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Video container is visible
+                    if (!hasAutoPlayed) {
+                        // First time - autoplay
+                        mainPlayer.play().catch(() => {
+                            console.log('Autoplay prevented by browser');
+                        });
+                        hasAutoPlayed = true;
+                    } else if (isPipMode) {
+                        // Coming back to main video - hide PiP
+                        hidePip();
+                    }
+                } else {
+                    // Video container is NOT visible
+                    if (hasAutoPlayed && !isPipClosed) {
+                        // Video has been played and user scrolled away - show PiP
+                        mainPlayer.getPaused().then((paused) => {
+                            if (!paused || isPipMode) {
+                                showPip();
+                            }
+                        });
+                    }
+                }
+            });
+        }, {
+            threshold: 0.3 // Trigger when 30% of video is visible
+        });
+        
+        observer.observe(videoContainer);
+        
+        // Close PiP button
+        pipClose?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            pipContainer.style.opacity = '0';
+            pipContainer.style.pointerEvents = 'none';
+            pipPlayer.pause();
+            isPipMode = false;
+            isPipClosed = true;
+        });
+        
+        // Allow user to unmute by clicking on PiP
+        pipContainer?.addEventListener('click', (e) => {
+            if (e.target !== pipClose && !pipClose.contains(e.target)) {
+                pipPlayer.getMuted().then((muted) => {
+                    if (muted) {
+                        pipPlayer.setMuted(false);
+                        const hint = document.getElementById('unmute-hint');
+                        if (hint) {
+                            hint.style.opacity = '0';
+                            setTimeout(() => {
+                                hint.style.display = 'none';
+                            }, 300);
+                        }
+                    }
+                });
+            }
+        });
+        
+        // Also allow unmuting main video
+        videoContainer?.addEventListener('click', () => {
+            mainPlayer.getMuted().then((muted) => {
+                if (muted) {
+                    mainPlayer.setMuted(false);
+                }
+            });
+        });
+    }
+    
+    // Initialize when Vimeo API is ready
+    if (typeof Vimeo !== 'undefined') {
+        initVideoControls();
+    } else {
+        window.addEventListener('load', () => {
+            setTimeout(initVideoControls, 500);
+        });
+    }
+</script>
+
+
