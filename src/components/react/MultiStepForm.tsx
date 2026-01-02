@@ -302,13 +302,21 @@ export default function MultiStepForm() {
               {/* Step 1: Crypto Activity */}
               {currentStep === 1 && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-zinc-700/50 mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-400">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 16v-4"></path>
+                      <path d="M12 8h.01"></path>
+                    </svg>
+                    <span className="text-xs text-zinc-400 font-medium tracking-wide">For active crypto investors with complex transaction history</span>
+                  </div>
                   <h2 className="text-3xl md:text-4xl font-manrope font-semibold text-white mb-4">
                     What best describes your crypto activity?
                   </h2>
                   <p className="text-zinc-400 mb-8 font-sans">
                     Select all that apply to your situation.
                   </p>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2 md:gap-3">
                     {[
                       'DeFi / DEX Power User',
                       'Mining',
@@ -321,7 +329,7 @@ export default function MultiStepForm() {
                       <button
                         key={item}
                         onClick={() => toggleActivity(item)}
-                        className={`px-6 py-3 rounded-full border text-sm font-medium transition-all cursor-pointer ${
+                        className={`px-4 py-2 md:px-6 md:py-3 rounded-full border text-xs md:text-sm font-medium transition-all cursor-pointer ${
                           formData.activity.includes(item)
                             ? 'bg-orange-500/10 border-orange-500 text-white'
                             : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20 hover:bg-white/[0.07]'
